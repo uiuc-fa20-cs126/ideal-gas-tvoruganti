@@ -1,6 +1,7 @@
 #pragma once
 
 #include "cinder/gl/gl.h"
+#include <visualizer/Particle.h>
 
 namespace idealgas {
 
@@ -50,6 +51,9 @@ class Sketchpad {
 
  private:
   glm::vec2 top_left_margin_;
+  glm::vec2 part;
+  Particle temp;
+
 
 
   /** Number of screen pixels in the width/height of one sketchpad pixel */
