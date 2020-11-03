@@ -22,13 +22,16 @@ class IdealGasApp : public ci::app::App {
   void mouseDrag(ci::app::MouseEvent event) override;
   void keyDown(ci::app::KeyEvent event) override;
   void update() override;
+  void setup() override;
+
 
   // provided that you can see the entire UI on your screen.
-  const double kWindowSize = 1000;
-  const double kMargin = 100;
+  const int kWindowSize = 800;
+  const int kMargin = 100;
 
  private:
   Sketchpad sketchpad_;
+  size_t speed_multiplier;
 };
 
 }  // namespace visualizer
