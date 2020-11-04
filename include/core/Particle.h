@@ -69,11 +69,6 @@ private:
   vec2 velocity_; //holds the velocity
   size_t radius_; //holds the radius of the particle
 };
-
-
-
-
-
 }
 
 

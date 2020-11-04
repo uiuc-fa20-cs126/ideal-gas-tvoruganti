@@ -55,7 +55,7 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
         src/visualizer/naive_bayes_app.cc
         src/visualizer/ParticleContainer.cc)
 
-list(APPEND TEST_FILES tests/testmain.cc)
+list(APPEND TEST_FILES tests/test_particle_class.cc tests/test_particle_container.cc)
 
 ci_make_app(
         APP_NAME        sketchpad-classifier

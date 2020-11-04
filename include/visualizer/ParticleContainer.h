@@ -20,6 +20,8 @@ class ParticleContainer {
    * @param num_pixels_per_side how long each side is
    * @param rad radius for particles
    */
+  ParticleContainer(const vec2& top_left_corner, std::vector<Particle> part_list, size_t num_pixels_per_side, size_t rad);
+
   ParticleContainer(const vec2& top_left_corner, size_t num_pixels_per_side, size_t rad);
 
   /**
@@ -42,6 +44,12 @@ class ParticleContainer {
    * @return number of particles in the container
    */
   size_t GetNumParticles();
+
+  /**
+   * Gets the particle list, only for testing
+   * @return particel list
+   */
+  std::vector<Particle> GetParticleList() const;
 
  private:
   vec2 margin_; //distance from screen corner to put container

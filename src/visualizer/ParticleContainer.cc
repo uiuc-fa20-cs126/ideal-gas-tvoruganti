@@ -9,6 +9,11 @@ ParticleContainer::ParticleContainer(const vec2 &top_left_corner, size_t sketchp
   particle_list_ = std::vector<Particle>();
 }
 
+ParticleContainer::ParticleContainer(const vec2 &top_left_corner,
+                                    std::vector<Particle> part_list,
+                                    size_t num_pixels_per_side, size_t rad)
+    : margin_(top_left_corner), particle_list_(part_list), radius(rad), container_side_length_(num_pixels_per_side){}
+
 void ParticleContainer::Draw() const {
 
   //creates container for particles
@@ -77,6 +82,10 @@ void ParticleContainer::AddParticle() {
 
 size_t ParticleContainer::GetNumParticles() {
   return particle_list_.size();
+}
+
+std::vector<Particle> ParticleContainer::GetParticleList() const {
+  return particle_list_;
 }
 
 } // namespace visualizer

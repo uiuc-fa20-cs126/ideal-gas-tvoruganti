@@ -47,7 +47,7 @@ class IdealGasApp : public ci::app::App {
   // provided that you can see the entire UI on your screen.
   const size_t kWindowSize = 800; //window size
   const size_t kMargin = 100; //margin between window and container
-  const size_t kNumStartingParticles = 25; //how many particles simulation should start with
+  const size_t kNumStartingParticles = (size_t) sqrt(kWindowSize); //how many particles simulation should start with
 
  private:
   ParticleContainer particle_container_; //container itself
