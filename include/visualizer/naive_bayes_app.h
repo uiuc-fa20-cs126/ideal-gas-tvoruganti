@@ -1,9 +1,9 @@
 #pragma once
 
+#include "ParticleContainer.h"
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
-#include "sketchpad.h"
 
 namespace idealgas {
 
@@ -14,24 +14,44 @@ namespace visualizer {
  * classify it.
  */
 class IdealGasApp : public ci::app::App {
+
  public:
+
+  /**
+   * Creates the App
+   */
   IdealGasApp();
 
+  /**
+   * Draws the App
+   */
   void draw() override;
-  void mouseDown(ci::app::MouseEvent event) override;
-  void mouseDrag(ci::app::MouseEvent event) override;
+
+  /**
+   * Checks if any keys have been pressed and executes events for certain presses
+   * @param event key that is pressed
+   */
   void keyDown(ci::app::KeyEvent event) override;
+
+  /**
+   * updates the app
+   */
   void update() override;
+
+  /**
+   * Initial conditions
+   */
   void setup() override;
 
 
   // provided that you can see the entire UI on your screen.
-  const int kWindowSize = 800;
-  const int kMargin = 100;
+  const size_t kWindowSize = 800; //window size
+  const size_t kMargin = 100; //margin between window and container
+  const size_t kNumStartingParticles = 25; //how many particles simulation should start with
 
  private:
-  Sketchpad sketchpad_;
-  size_t speed_multiplier;
+  ParticleContainer particle_container_; //container itself
+  size_t speed_multiplier; //speed of the simulation
 };
 
 }  // namespace visualizer
