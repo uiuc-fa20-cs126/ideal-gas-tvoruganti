@@ -5,8 +5,10 @@
 #include <glm/vec2.hpp>
 
 using glm::vec2;
+using namespace ci;
+using std::vector;
 
-namespace idealgas {
+namespace ideal_gas {
 
 namespace visualizer {
 
@@ -20,9 +22,9 @@ class ParticleContainer {
    * @param num_pixels_per_side how long each side is
    * @param rad radius for particles
    */
-  ParticleContainer(const vec2& top_left_corner, std::vector<Particle> part_list, size_t num_pixels_per_side, size_t rad);
+  ParticleContainer(const vec2& top_left_corner, vector<Particle> part_list, size_t num_pixels_per_side, size_t variety);
 
-  ParticleContainer(const vec2& top_left_corner, size_t num_pixels_per_side, size_t rad);
+  ParticleContainer(const vec2& top_left_corner, size_t num_pixels_per_side, size_t variety, vector<ci::Color>  col);
 
   /**
    * Draws the Container with all its particles
@@ -35,9 +37,10 @@ class ParticleContainer {
   void update();
 
   /**
-   * Adds a new particle to the simulation
+   * Adds a particle to the simulation
+   * @param pos which particle to add
    */
-  void AddParticle();
+  void AddParticle(size_t pos);
 
   /**
    * Gets the number of particles
@@ -49,13 +52,14 @@ class ParticleContainer {
    * Gets the particle list, only for testing
    * @return particel list
    */
-  std::vector<Particle> GetParticleList() const;
+  vector<Particle> GetParticleList() const;
 
  private:
   vec2 margin_; //distance from screen corner to put container
-  std::vector<Particle> particle_list_; //list of all particles on screen
-  size_t radius; //radius of each particle
+  vector<Particle> particle_list_; // list of all particles on screen
   size_t container_side_length_;   // Number of screen pixels in the width/height of one sketchpad pixel
+  vector<vec2> particle_variety_; // holds radius and mass of all different particles
+  vector<ci::Color> const kColors; // different colors of particles
 };
 
 }  // namespace visualizer

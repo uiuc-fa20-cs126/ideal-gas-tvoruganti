@@ -52,8 +52,9 @@ include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 list(APPEND CORE_SOURCE_FILES src/core/Particle.cc)
 
 list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
-        src/visualizer/naive_bayes_app.cc
-        src/visualizer/ParticleContainer.cc)
+        src/visualizer/ideal_gas_app.cc
+        src/visualizer/ParticleContainer.cc
+        src/visualizer/Histogram.cc)
 
 list(APPEND TEST_FILES tests/test_particle_class.cc tests/test_particle_container.cc)
 

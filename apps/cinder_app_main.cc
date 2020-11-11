@@ -1,6 +1,6 @@
-#include <visualizer/naive_bayes_app.h>
+#include <visualizer/ideal_gas_app.h>
 
-using idealgas::visualizer::IdealGasApp;
+using ideal_gas::visualizer::IdealGasApp;
 
 void prepareSettings(IdealGasApp::Settings* settings) {
   settings->setResizable(false);

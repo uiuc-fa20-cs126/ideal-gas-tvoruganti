@@ -1,31 +1,45 @@
 #include <visualizer/ParticleContainer.h>
 
-namespace idealgas {
+#include <utility>
+
+namespace ideal_gas {
 
 namespace visualizer {
 
-ParticleContainer::ParticleContainer(const vec2 &top_left_corner, size_t sketchpad_size, size_t rad)
-    : margin_(top_left_corner), radius(rad), container_side_length_(sketchpad_size){
-  particle_list_ = std::vector<Particle>();
+ParticleContainer::ParticleContainer(const vec2 &top_left_corner, size_t sketchpad_size, size_t variety, vector<Color>  col)
+    : margin_(top_left_corner), container_side_length_(sketchpad_size), kColors(move(col)){
+  particle_list_ = vector<Particle>();
+  particle_variety_ = vector<vec2>(variety);
+  size_t inc_mass = sqrt(container_side_length_)/variety;
+  size_t inc_rad = 18/variety;
+  for (size_t i = 0; i < variety; ++i) {
+    particle_variety_[i] = vec2(inc_mass*(i+1), inc_rad*(i+1)+2);
+  }
 }
 
 ParticleContainer::ParticleContainer(const vec2 &top_left_corner,
-                                    std::vector<Particle> part_list,
-                                    size_t num_pixels_per_side, size_t rad)
-    : margin_(top_left_corner), particle_list_(part_list), radius(rad), container_side_length_(num_pixels_per_side){}
+                                    vector<Particle> part_list,
+                                    size_t num_pixels_per_side, size_t variety)
+    : margin_(top_left_corner), particle_list_(move(part_list)), container_side_length_(num_pixels_per_side){}
 
 void ParticleContainer::Draw() const {
-
   //creates container for particles
-  ci::gl::color(ci::Color("white"));
+  gl::color(Color("white"));
   vec2 bottom_right_margin = margin_ + vec2(container_side_length_, container_side_length_);
-  ci::Rectf margin_bounding_box(margin_, bottom_right_margin);
-  ci::gl::drawSolidRect(margin_bounding_box);
+  Rectf margin_bounding_box(margin_, bottom_right_margin);
+  gl::drawSolidRect(margin_bounding_box);
 
   //draws every particle
   for (const Particle & part : particle_list_) {
-    ci::gl::color(ci::Color("orange"));
-    ci::gl::drawSolidCircle(part.GetPos(), part.GetRadius());
+    size_t count = 0;
+    for (const auto & des_vec : particle_variety_) {
+      if (part.GetMass() == des_vec.x && part.GetRadius() == des_vec.y){
+        gl::color(Color(kColors.at(count)));
+        gl::drawSolidCircle(part.GetPos(), part.GetRadius());
+        break;
+      }
+      count++;
+    }
   }
 }
 
@@ -50,17 +64,20 @@ void ParticleContainer::update() {
   //checks for wall collisions and moves each particle
   for (auto & curr_part : particle_list_) {
       //Checks if edge of particle's x-coordinate is the same as the horizontal wall or past it
-    if ((curr_part.GetPos().x - radius) <= margin_.x || (curr_part.GetPos().x + radius) >= (margin_.x + container_side_length_)){
+    if ((curr_part.GetPos().x - curr_part.GetRadius()) <= margin_.x || (curr_part.GetPos().x + curr_part.GetRadius()) >= (margin_.x + container_side_length_)){
       curr_part.CollideHorizontalWall();
       //Checks if edge of particle's y-coordinate is the same as the vertical wall or past it
-    }else if ((curr_part.GetPos().y - radius) <= margin_.y || (curr_part.GetPos().y + radius) >= (margin_.y + container_side_length_)){
+    }else if ((curr_part.GetPos().y - curr_part.GetRadius()) <= margin_.y || (curr_part.GetPos().y + curr_part.GetRadius()) >= (margin_.y + container_side_length_)){
       curr_part.CollideVerticalWall();
     }
     curr_part.Move();
   }
 }
 
-void ParticleContainer::AddParticle() {
+void ParticleContainer::AddParticle(size_t pos) {
+
+  size_t mass = particle_variety_[pos].x;
+  size_t radius = particle_variety_[pos].y;
 
   size_t possible_x_pos = rand() % (container_side_length_ - 2*radius) + margin_.x + radius; //gets a random x position within the walls
   size_t possible_y_pos = rand() % (container_side_length_ - 2*radius) + margin_.y + radius; //gets a random y position within the walls
@@ -75,7 +92,7 @@ void ParticleContainer::AddParticle() {
   if (rand() % 2 == 1)
     possible_y_vel *= -1;
 
-  Particle part_to_add(vec2(possible_x_pos, possible_y_pos), vec2(possible_x_vel, possible_y_vel), radius);
+  Particle part_to_add(vec2(possible_x_pos, possible_y_pos), vec2(possible_x_vel, possible_y_vel), radius, mass);
 
   particle_list_.push_back(part_to_add);
 }
@@ -84,7 +101,7 @@ size_t ParticleContainer::GetNumParticles() {
   return particle_list_.size();
 }
 
-std::vector<Particle> ParticleContainer::GetParticleList() const {
+vector<Particle> ParticleContainer::GetParticleList() const {
   return particle_list_;
 }
 
