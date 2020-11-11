@@ -55,9 +55,15 @@ public:
    */
   void sort(const std::vector<Particle>& p_list);
 
+  /**
+   * Gets the maximum speed of a particle in a specific set
+   * @param position which list in sorted particles to look through
+   * @return the maximum speed
+   */
+  float_t GetMaxSpeed(size_t position) const;
+
 private:
   size_t variety_; //amount of different particles
-  size_t kNumRects = 10; //number of intervals on x-axis
   vec2 top_left_corner_; //top left corner of given histogram space
   vec2 bottom_right_corner_; // bottom right corner of given histogram space
   std::vector<std::vector<Particle>> sorted_particles_; // particles sorted by type
