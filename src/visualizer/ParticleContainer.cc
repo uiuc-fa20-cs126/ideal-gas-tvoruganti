@@ -20,7 +20,14 @@ ParticleContainer::ParticleContainer(const vec2 &top_left_corner, size_t sketchp
 ParticleContainer::ParticleContainer(const vec2 &top_left_corner,
                                     vector<Particle> part_list,
                                     size_t num_pixels_per_side, size_t variety)
-    : margin_(top_left_corner), particle_list_(move(part_list)), container_side_length_(num_pixels_per_side){}
+    : margin_(top_left_corner), particle_list_(move(part_list)), container_side_length_(num_pixels_per_side){
+  particle_variety_ = vector<vec2>(variety);
+  size_t inc_mass = sqrt(container_side_length_)/variety;
+  size_t inc_rad = 18/variety;
+  for (size_t i = 0; i < variety; ++i) {
+    particle_variety_[i] = vec2(inc_mass*(i+1), inc_rad*(i+1)+2);
+  }
+}
 
 void ParticleContainer::Draw() const {
   //creates container for particles
@@ -63,10 +70,10 @@ void ParticleContainer::update() {
 
   //checks for wall collisions and moves each particle
   for (auto & curr_part : particle_list_) {
-      //Checks if edge of particle's x-coordinate is the same as the horizontal wall or past it
+      //Checks if edge of particle's x-coordinate is the same as a horizontal wall or past it
     if ((curr_part.GetPos().x - curr_part.GetRadius()) <= margin_.x || (curr_part.GetPos().x + curr_part.GetRadius()) >= (margin_.x + container_side_length_)){
       curr_part.CollideHorizontalWall();
-      //Checks if edge of particle's y-coordinate is the same as the vertical wall or past it
+      //Checks if edge of particle's y-coordinate is the same as a vertical wall or past it
     }else if ((curr_part.GetPos().y - curr_part.GetRadius()) <= margin_.y || (curr_part.GetPos().y + curr_part.GetRadius()) >= (margin_.y + container_side_length_)){
       curr_part.CollideVerticalWall();
     }

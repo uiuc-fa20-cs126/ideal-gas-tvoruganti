@@ -53,7 +53,7 @@ class IdealGasApp : public ci::app::App {
   // provided that you can see the entire UI on your screen.
   const size_t kWindowSize = 800; //window size
   const size_t kMargin = 100; //margin between window and container
-  const size_t kNumStartingParticles = 20; //how many particles simulation should start with
+  const size_t kNumStartingParticles = 50; //how many particles simulation should start with
   const size_t kVariety = 6;// number of different types of particles
   const size_t kHistoSpace = 400;// horizontal space for histogram
   vector<ci::Color> const kColors = {"orange", "blue", "red", "teal", "magenta", "purple", "cyan", "green", "gray"}; //different colors of particles

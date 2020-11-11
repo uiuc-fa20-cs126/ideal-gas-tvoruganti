@@ -49,7 +49,7 @@ class ParticleContainer {
   size_t GetNumParticles();
 
   /**
-   * Gets the particle list, only for testing
+   * Gets the particle list
    * @return particel list
    */
   vector<Particle> GetParticleList() const;

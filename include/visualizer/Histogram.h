@@ -40,13 +40,20 @@ public:
    */
   void update(const std::vector<Particle>& p_list);
 
+private:
+  size_t variety_; //amount of different particles
+  vec2 top_left_corner_; //top left corner of given histogram space
+  vec2 bottom_right_corner_; // bottom right corner of given histogram space
+  std::vector<std::vector<Particle>> sorted_particles_; // particles sorted by type
+  std::vector<ci::Color> const kColors; //colors for histogram
+
   /**
-   * Sorts all the particles of a specific type by their speed within the passed bounds
-   * @param lower_bound lower threshold for speed
-   * @param upper_bound higher threshold for speed
-   * @param part_type which vector of particles to look for in the sorted list
-   * @return number of particles that are in the interval
-   */
+ * Sorts all the particles of a specific type by their speed within the passed bounds
+ * @param lower_bound lower threshold for speed
+ * @param upper_bound higher threshold for speed
+ * @param part_type which vector of particles to look for in the sorted list
+ * @return number of particles that are in the interval
+ */
   size_t NumParticlesInRange(size_t lower_bound, size_t upper_bound, size_t part_type) const;
 
   /**
@@ -61,14 +68,6 @@ public:
    * @return the maximum speed
    */
   float_t GetMaxSpeed(size_t position) const;
-
-private:
-  size_t variety_; //amount of different particles
-  vec2 top_left_corner_; //top left corner of given histogram space
-  vec2 bottom_right_corner_; // bottom right corner of given histogram space
-  std::vector<std::vector<Particle>> sorted_particles_; // particles sorted by type
-  std::vector<ci::Color> const kColors; //colors for histogram
-
 };
 
 
