@@ -59,7 +59,7 @@ list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
 list(APPEND TEST_FILES tests/test_particle_class.cc tests/test_particle_container.cc)
 
 ci_make_app(
-        APP_NAME        sketchpad-classifier
+        APP_NAME        ideal-gas-simulation
         CINDER_PATH     ${CINDER_PATH}
         SOURCES         apps/cinder_app_main.cc ${SOURCE_FILES}
         INCLUDES        include

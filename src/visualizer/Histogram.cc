@@ -36,7 +36,7 @@ void Histogram::Draw() const {
     ci::gl::drawStringRight(
         "0", origin + vec2(-2, 10), ci::Color("white"));
 
-    //Draws the vertical label and rotates it 90 degrees
+    //Draws the vertical label and rotates it 90 degrees so it's sideways
     ci::gl::translate(hist_top_left + vec2(-30, space_per_hist.y/2));
     ci::gl::rotate(-M_PI/2);
     ci::gl::drawStringCentered(
@@ -49,7 +49,7 @@ void Histogram::Draw() const {
     size_t num_vert_labels = sorted_particles_[j].empty() ? 1:std::min(sorted_particles_[j].size(), (size_t)(glm::distance(origin, hist_top_left)/25));
 
     //number of intervals on x-axis, if list is empty set num_rects to 1 to avoid divide by 0 error
-    size_t num_rects = 10;//GetMaxSpeed(j) == -1 ? 1:lround(GetMaxSpeed(j) + .5);
+    size_t num_rects = 10;
     float horiz_inc = GetMaxSpeed(j)/num_rects + .1f;
 
     size_t rect_width = glm::distance(origin, hist_top_left + space_per_hist)/num_rects; //horizontal width of each bar
@@ -60,7 +60,7 @@ void Histogram::Draw() const {
     //draws vertical labels
     for (size_t i = 0; i < num_vert_labels; ++i) {
       ci::gl::drawStringRight(
-          std::to_string((size_t)(vert_label_inc*(i+1))), hist_top_left + vec2(-2, space_per_hist.y - label_width_inc*(i+1)), ci::Color("white"));
+          std::to_string(lround(vert_label_inc*(i+1.0f))), hist_top_left + vec2(-2, space_per_hist.y - label_width_inc*(i+1.0f)), ci::Color("white"));
     }
 
     //draws each bar in the histogram
